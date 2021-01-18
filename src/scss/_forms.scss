@@ -351,3 +351,8 @@ div.wpforms-container.submission .wpforms-form .wpforms-submit-container {
     }
 
 }
+
+/* Override theme light field color for Stripe Credit Card Field */
+div.wpforms-container.theme-light#wpforms-993 .wpforms-field-stripe-credit-card input[type=text] {
+    color: #444 !important;
+}
