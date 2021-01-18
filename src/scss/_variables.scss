@@ -1,0 +1,10 @@
+$color: (
+    White: #ffffff,
+    Black: #000000,
+    Sinbad: #9fced2,
+    BostonBlue: #3f9da6,
+);
+
+@function color($key, $alpha: 1) {
+    @return rgba(map-get($color, $key), $alpha);
+}

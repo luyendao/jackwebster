@@ -1,0 +1,353 @@
+/* WPForms. */
+div.wpforms-container .wpforms-form .wpforms-field,
+div.wpforms-container:not(.submission) .wpforms-form .wpforms-field-divider:first-child {
+    padding: 0 0 40px;
+}
+
+div.wpforms-container .wpforms-form .wpforms-field-pagebreak {
+    padding: 0;
+}
+
+div.wpforms-container .wpforms-form .wpforms-field-pagebreak button {
+    margin: 0;
+}
+
+div.wpforms-container .wpforms-form .wpforms-field-divider {
+    padding: 40px 0;
+}
+
+div.wpforms-container .wpforms-form .wpforms-field-label {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+}
+
+div.wpforms-container .wpforms-form .wpforms-field-description {
+    line-height: 1.5;
+}
+
+div.wpforms-container .wpforms-form .wpforms-field-divider h3 {
+    font-family: 'Open Sans Bold', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: 0.025em;
+}
+
+div.wpforms-container .wpforms-form .wpforms-field label.wpforms-error {
+    position: relative;
+}
+
+div.wpforms-container .wpforms-form .wpforms-field label.wpforms-error:after {
+
+    content: '!';
+
+    position: absolute;
+    /*
+     * 3px = label top margin.
+     * 9px = (input height - this height) / 2.
+     */
+    bottom: calc(100% + 3px + 9px);
+    right: 0;
+
+    width: 20px;
+    height: 20px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: 'Open Sans Bold', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+
+}
+
+div.wpforms-container .wpforms-form .wpforms-field-file-upload label.wpforms-error:after {
+    right: 8px;
+}
+
+div.wpforms-container .wpforms-form input[type=text],
+div.wpforms-container .wpforms-form input[type=email],
+div.wpforms-container .wpforms-form input[type=tel],
+div.wpforms-container .wpforms-form textarea,
+div.wpforms-container .wpforms-form select {
+
+    background: none;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid;
+    border-radius: 0;
+
+    font-family: 'Open Sans Bold', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.25;
+
+    padding: 0;
+
+}
+
+div.wpforms-container .wpforms-form textarea {
+    margin-top: 10px;
+}
+
+div.wpforms-container .wpforms-form textarea:focus,
+div.wpforms-container .wpforms-form select:focus,
+div.wpforms-container .wpforms-form .wpforms-field input.wpforms-error,
+div.wpforms-container .wpforms-form .wpforms-field textarea.wpforms-error,
+div.wpforms-container .wpforms-form .wpforms-field select.wpforms-error {
+    border: none;
+}
+
+div.wpforms-container .wpforms-form label.wpforms-error {
+    margin-top: 3px;
+}
+
+div.wpforms-container .wpforms-form button[type=submit],
+div.wpforms-container .wpforms-form button.wpforms-page-button {
+
+    appearance: none;
+    outline: none;
+    border: none;
+    background: color(Sinbad);
+
+    font-family: 'Open Sans Bold', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1;
+    // color: color(BostonBlue);
+
+    padding: 15px 40px;
+
+    transition: background 300ms ease;
+
+}
+
+div.wpforms-container .wpforms-form .wpforms-field.half {
+
+    width: 50%;
+    display: inline-block;
+
+    @include mobile {
+        width: 100%;
+    }
+
+}
+
+div.wpforms-container .wpforms-form .wpforms-field.amounts .wpforms-field-label-inline {
+
+    font-family: 'Open Sans Bold', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+
+    width: 175px;
+    height: 45px;
+
+    border: 1px solid white;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    cursor: pointer;
+
+}
+
+div.wpforms-container .wpforms-form .wpforms-field.amounts input[type=checkbox] {
+    width: 0;
+    margin: 0;
+}
+
+div.wpforms-container .wpforms-form .wpforms-field-date-time-date-month,
+div.wpforms-container .wpforms-form .wpforms-field-date-time-date-day,
+div.wpforms-container .wpforms-form .wpforms-field-date-time-date-year {
+    width: 25%;
+}
+
+div.wpforms-container .wpforms-form .wpforms-field.wpforms-field-select-style-classic select {
+    padding-left: 0;
+}
+
+div.wpforms-container .wpforms-form *::placeholder {
+    opacity: 0.25;
+}
+
+div.wpforms-container .wpforms-form .flex-start .wpforms-pagebreak-center {
+    display: flex;
+    justify-content: flex-start;
+    // justify-content: center;
+}
+
+div.wpforms-container .wpforms-form .flex-end .wpforms-pagebreak-center {
+    display: flex;
+    justify-content: flex-end;
+    // justify-content: center;
+}
+
+div.wpforms-container .wpforms-form .space-between .wpforms-pagebreak-center {
+    display: flex;
+    justify-content: space-between;
+    // justify-content: center;
+}
+
+div.wpforms-container .wpforms-form .flex-start .wpforms-pagebreak-center:before,
+div.wpforms-container .wpforms-form .flex-start .wpforms-pagebreak-center:after,
+div.wpforms-container .wpforms-form .flex-end .wpforms-pagebreak-center:before,
+div.wpforms-container .wpforms-form .flex-end .wpforms-pagebreak-center:after,
+div.wpforms-container .wpforms-form .space-between .wpforms-pagebreak-center:before,
+div.wpforms-container .wpforms-form .space-between .wpforms-pagebreak-center:after {
+    display: none;
+}
+
+/* Theme styles. */
+div.wpforms-container.theme-light .wpforms-form,
+div.wpforms-container.theme-light .wpforms-form .wpforms-required-label,
+div.wpforms-container.theme-light .wpforms-form .wpforms-field-divider h3,
+div.wpforms-container.theme-light .wpforms-form label.wpforms-error {
+    color: color(White);
+}
+
+div.wpforms-container.theme-dark .wpforms-form,
+div.wpforms-container.theme-dark .wpforms-form .wpforms-required-label,
+div.wpforms-container.theme-dark .wpforms-form .wpforms-field-divider h3 {
+    color: color(Black);
+}
+
+div.wpforms-container.theme-dark .wpforms-form label.wpforms-error {
+    color: color(BostonBlue);
+}
+
+div.wpforms-container.theme-light .wpforms-form .wpforms-field label.wpforms-error:after,
+div.wpforms-container.theme-light .wpforms-form .wpforms-field.amounts .wpforms-selected .wpforms-field-label-inline {
+    background: color(White);
+    color: color(BostonBlue);
+}
+
+div.wpforms-container.theme-dark .wpforms-form .wpforms-field label.wpforms-error:after,
+div.wpforms-container.theme-dark .wpforms-form .wpforms-field.amounts .wpforms-selected .wpforms-field-label-inline {
+    background: color(BostonBlue);
+    color: color(White);
+}
+
+div.wpforms-container.theme-light .wpforms-form input[type=text],
+div.wpforms-container.theme-light .wpforms-form input[type=email],
+div.wpforms-container.theme-light .wpforms-form input[type=tel],
+div.wpforms-container.theme-light .wpforms-form textarea,
+div.wpforms-container.theme-light .wpforms-form select {
+    color: color(White);
+    border-color: color(White);
+}
+
+div.wpforms-container.theme-dark .wpforms-form input[type=text],
+div.wpforms-container.theme-dark .wpforms-form input[type=email],
+div.wpforms-container.theme-dark .wpforms-form input[type=tel],
+div.wpforms-container.theme-dark .wpforms-form textarea,
+div.wpforms-container.theme-dark .wpforms-form select {
+    color: color(Black);
+    border-color: color(Black);
+}
+
+div.wpforms-container.theme-light .wpforms-form textarea:focus,
+div.wpforms-container.theme-light .wpforms-form select:focus,
+div.wpforms-container.theme-light .wpforms-form .wpforms-field input.wpforms-error,
+div.wpforms-container.theme-light .wpforms-form .wpforms-field textarea.wpforms-error,
+div.wpforms-container.theme-light .wpforms-form .wpforms-field select.wpforms-error {
+    border-bottom: 1px solid color(White);
+}
+
+div.wpforms-container.theme-dark .wpforms-form textarea:focus,
+div.wpforms-container.theme-dark .wpforms-form select:focus,
+div.wpforms-container.theme-dark .wpforms-form .wpforms-field input.wpforms-error,
+div.wpforms-container.theme-dark .wpforms-form .wpforms-field textarea.wpforms-error,
+div.wpforms-container.theme-dark .wpforms-form .wpforms-field select.wpforms-error {
+    border-bottom: 1px solid color(Black);
+}
+
+div.wpforms-container.theme-light .wpforms-form button[type=submit] {
+    color: color(BostonBlue);
+}
+
+div.wpforms-container.theme-dark .wpforms-form button[type=submit],
+div.wpforms-container.theme-dark .wpforms-form button.wpforms-page-next {
+    color: color(White);
+}
+
+div.wpforms-container.theme-dark .wpforms-form button.wpforms-page-prev {
+    color: color(Sinbad);
+    border: 1px solid color(Sinbad);
+    background: color(White);
+}
+
+div.wpforms-container.theme-light .wpforms-form button[type=submit]:hover {
+    background: color(White);
+    border: none;
+}
+
+div.wpforms-container.theme-dark .wpforms-form button[type=submit]:hover,
+div.wpforms-container.theme-dark .wpforms-form button.wpforms-page-next:hover {
+    background: color(BostonBlue);
+    border: none;
+}
+
+div.wpforms-container.theme-dark .wpforms-form button.wpforms-page-prev:hover {
+    color: color(White);
+    border: 1px solid color(BostonBlue);
+    background: color(BostonBlue);
+}
+
+/* Form-specific Styles. */
+div.wpforms-container.contact-form .wpforms-form .wpforms-field.first-name,
+div.wpforms-container.donate-form .wpforms-form .wpforms-field.first-name,
+div.wpforms-container.submission .wpforms-form .wpforms-field.first-name,
+div.wpforms-container.poynter-fellowship .wpforms-form .wpforms-field.first-name,
+div.wpforms-container.research-skills-fellowship .wpforms-form .wpforms-field.first-name,
+div.wpforms-container.purchase-tickets .wpforms-form .wpforms-field.first-name,
+div.wpforms-container.student-journalism .wpforms-form .wpforms-field.first-name,
+div.wpforms-container.student-journalism .wpforms-form .wpforms-field.program-start,
+div.wpforms-container.indigenous-student-journalism .wpforms-form .wpforms-field.first-name,
+div.wpforms-container.indigenous-student-journalism .wpforms-form .wpforms-field.program-start {
+
+    // padding-right: 30px;
+    padding-right: 2%;
+
+    @include mobile {
+        padding-right: 0;
+    }
+
+}
+
+div.wpforms-container.contact-form .wpforms-form .wpforms-field.last-name,
+div.wpforms-container.donate-form .wpforms-form .wpforms-field.last-name,
+div.wpforms-container.submission .wpforms-form .wpforms-field.last-name,
+div.wpforms-container.poynter-fellowship .wpforms-form .wpforms-field.last-name,
+div.wpforms-container.research-skills-fellowship .wpforms-form .wpforms-field.last-name,
+div.wpforms-container.purchase-tickets .wpforms-form .wpforms-field.last-name,
+div.wpforms-container.student-journalism .wpforms-form .wpforms-field.last-name,
+div.wpforms-container.student-journalism .wpforms-form .wpforms-field.grad-year,
+div.wpforms-container.indigenous-student-journalism .wpforms-form .wpforms-field.last-name,
+div.wpforms-container.indigenous-student-journalism .wpforms-form .wpforms-field.grad-year {
+
+    // padding-left: 30px;
+    padding-left: 2%;
+
+    @include mobile {
+        padding-left: 0;
+    }
+
+}
+
+div.wpforms-container.submission .wpforms-form .wpforms-submit-container {
+
+    text-align: right;
+    // text-align: center;
+
+    @include mobile-less {
+        text-align: left;
+    }
+
+}
