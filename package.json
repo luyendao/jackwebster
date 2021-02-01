@@ -20,5 +20,8 @@
   "scripts": {
     "build": "NODE_ENV=production npx rollup --config",
     "watch": "NODE_ENV=development npx rollup --config --watch"
+  },
+  "devDependencies": {
+    "rollup-plugin-livereload": "^2.0.0"
   }
 }

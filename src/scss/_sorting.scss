@@ -1,7 +1,7 @@
 .filter_container {
-	background-image: url("./src/assets/images/TexturedBackground.png");
+	background-image: url("./src/assets/images/page-background.jpg");
 	background-size: 100% auto;
-	background-repeat: no-repeat;
+	background-repeat: repeat;
 	padding: 0 7.5% 50px;
 	display: flex;
 	flex-direction: column;
@@ -10,9 +10,9 @@
 }
 
 .pagination_container {
-	background-image: url("./src/assets/images/TexturedBackground.png");
+	background-image: url("./src/assets/images/page-background.jpg");
 	background-size: 100% auto;
-	background-repeat: no-repeat;
+	background-repeat: repeat;
 	padding: 0 7.5% 50px;
 	display: flex;
 	flex-direction: row;
@@ -34,7 +34,8 @@
 	grid-gap: 50px; 
 	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 	grid-auto-flow: dense;
-	background-image: url("./src/assets/images/TexturedBackground.png");
+	background-image: url("./src/assets/images/page-background.jpg");
+	background-repeat: repeat;
 }
 
 .nav-links {
