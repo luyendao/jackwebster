@@ -377,4 +377,201 @@ function misha_paginator( $first_page_url ){
     echo $pagination;
 }
 
+// Increase timeout for WP Forms DropZone file upload
+function wpf_dev_modern_file_upload_timeout() {
+        ?>
+        <script type="text/javascript">
+                window.addEventListener( 'load', function() {
+                        if ( typeof wpforms.dropzones === 'undefined' )  {
+                                return;
+                        }
+                        wpforms.dropzones.forEach(function( dropzone ) {
+                                dropzone.options.timeout = 60000; // The timeout for the XHR requests in milliseconds. Default is 300000.
+                        });
+                } );
+        </script>
+        <?php
+}
+add_action( 'wpforms_wp_footer', 'wpf_dev_modern_file_upload_timeout' );
+
+
+function jw_call_forms() {
+    $call_to_submission_forms= array (
+        // Test Form
+        2519,2520,2545,
+        // Call to Submission Forms
+        2476,2477,2478,2479,2480,2481,2482,2483,2484,2484,2485,2486,2487,2488,2489,2490
+    );
+
+    return $call_to_submission_forms;
+}
+
+
+
+// Validate Coupon Code
+add_action( 'wpforms_wp_footer', 'wpf_dev_modern_file_upload_timeout' );
+
+/**
+ * Add coupon code field validation.
+ *
+ * @link   https://wpforms.com/developers/how-to-add-coupon-code-field-validation-on-your-forms/
+ *
+ */
+function wpf_dev_validate_coupon( $fields, $entry, $form_data ) {
+       
+
+    $forms_with_coupons = jw_call_forms();
+
+    //get the value of the coupon code field the user entered
+    $coupon = $fields[47]['value'];
+
+    // If current form is in array of accepted forms and coupon field is set
+    if ( !in_array( $form_data['id'], $forms_with_coupons )) {
+        return $fields;
+    }
+     
+    //coupon code array, each coupon separated by comma
+    $coupon_code_list = array( 
+        'jw7433', 
+        'jw5287',
+        'jw9594',
+        'jw6181',
+        'jw5995',
+    );
+     
+    // check if value entered is not in the approved coupon list array      
+    if (!in_array($coupon, $coupon_code_list)) {  
+            // Add to global errors. This will stop form entry from being saved to the database.
+            // Uncomment the line below if you need to display the error above the form.
+            // wpforms()->process->errors[ $form_data['id'] ]['header'] = esc_html__( 'Some error occurred.', 'plugin-domain' );    
+   
+            // Check the field ID 5 and show error message at the top of form and under the specific field
+               wpforms()->process->errors[ $form_data['id'] ] [ '30' ] = esc_html__( 'Coupon code not found, please confirm the code and try again.', 'plugin-domain' );
+   
+            // Add additional logic (what to do if error is not displayed)
+        }
+    }
+//add_action( 'wpforms_process', 'wpf_dev_validate_coupon', 10, 3 );
+
+/**
+ * Set today's date as default date for all date pickers.
+ *
+ * @link https://wpforms.com/developers/how-to-set-a-default-date-for-your-date-picker-form-field/
+ *
+ */
+ 
+function wpf_dev_date_picker_range() {
+    ?>
+    <script type="text/javascript">
+        window.wpforms_datepicker = {
+            defaultDate: "today",
+        disableMobile: "true"
+        }
+    </script>
+    <?php
+}
+add_action( 'wpforms_wp_footer', 'wpf_dev_date_picker_range' );
+
+/**
+ * WPForms Add new address field scheme (Canada)
+ *
+ * @link   https://wpforms.com/developers/create-additional-schemes-for-the-address-field/
+ *
+ * @param  array $schemes
+ * @return array
+ */
+function wpf_dev_new_address_scheme( $schemes ) {
+    $schemes['canada'] = array(
+        'label'          => 'Canada',
+        'address1_label' => 'Address Line 1',
+        'address2_label' => 'Address Line 2',
+        'city_label'     => 'City',
+        'postal_label'   => 'Postal Code',
+        'state_label'    => 'Province',
+        'states'         => array(
+            //'AB' => 'Alberta',
+            'BC' => 'British Columbia',
+            //'MB' => 'Manitoba',
+            //'NB' => 'New Brunswick',
+            //'NL' => 'Newfoundland and Labrador',
+            //'NS' => 'Nova Scotia',
+            //'ON' => 'Ontario',
+            //'PE' => 'Prince Edward Island',
+            //'WQ' => 'Quebec',
+            //'SK' => 'Saskatchewan',
+        ),
+    );
+    return $schemes;
+}
+add_filter( 'wpforms_address_schemes', 'wpf_dev_new_address_scheme' );
+
+/**
+ * Show all fields in the confirmation message
+ *
+ * @link https://wpforms.com/developers/how-to-show-all-fields-in-your-confirmation-message/
+ *
+ */
+ 
+function wpf_dev_frontend_confirmation_message( $message, $form_data, $fields, $entry_id ) {
+
+$call_to_submission_forms = jw_call_forms();
+
+// If current form is in not in array of accepted forms return default message
+if ( !in_array($form_data['id'], $call_to_submission_forms )) {
+	return $message;
+}
+   
+$fname = $fields['29']['value'];
+$lname = $fields['30']['value'];
+$phone = $fields['33']['value'];
+$email = $fields['32']['value'];
+$page_url = $fields['58']['value'];
+$address = $fields['34']['value'];
+
+//$address_arr = explode($address);
+
+var_dump($address);
+
+$address1 = $address_arr[0];
+$city = $address_arr[1];
+$postal = $address_arr[3];
+
+$link = sprintf('<a href="%s?first_name=%s&last_name=%s&email=%s&phone=%s&address1=%s&city=%s&postal_code%s">Submit Another Entry</a>',$page_url,$fname,$lname,$email,$phone,$address_arr, $city, $postal);
+
+$body = sprintf('<p><strong>Submitting another entry in the same category?</strong></p>If you are submitting more than one entry to this Webster category, use the link below to have your contact information auto-filled.<p>%s</p>',$link); 
+     
+$message = sprintf('<h5>Thank you for your submission for the Webster Awards.</h5><p>%s</p>', $body);
+
+return $message;
+}
+add_filter( 'wpforms_frontend_confirmation_message', 'wpf_dev_frontend_confirmation_message', 10, 4 );
+
+/**
+ * WPForms, update total field
+ * @link https://www.billerickson.net/dynamically-update-fields-in-wpforms/
+ *
+ * @param array $fields Sanitized entry field values/properties.
+ * @param array $entry Original $_POST global.
+ * @param array $form_data Form settings/data
+ * @return array $fields
+ */
+function be_wpforms_update_total_field( $fields, $entry, $form_data ) {
+
+	$call_to_submission_forms = jw_call_forms();
+
+	// Only run on my form with ID = 7785
+	if( in_array( $form_data['id'], $call_to_submission_forms )) {
+		return $fields;
+	}
+
+	$fields[58]['value'] = sprintf('<a href="%s?first_name=%s">Submit Another Entry</a>',$fields[58]['value'], $fields[29]['value']); 
+
+	// Add red shirts (field ID 3) and blue shirts (field ID 4) into total (field ID 5)
+	//$fields[5]['value'] = intval( $fields[3]['value'] ) + intval( $fields[4]['value'] );
+
+	return $fields;
+}
+//add_filter( 'wpforms_process_filter', 'be_wpforms_update_total_field', 10, 3 );
+
+
 ?>
