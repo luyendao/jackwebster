@@ -7,7 +7,6 @@ function jack_webster_enqueue_parent_styles()
 
 function jack_webster_enqueue_scripts()
 {
-    wp_enqueue_script('custom-scripts', get_stylesheet_directory_uri() . '/bundle.js?123');
     wp_enqueue_style('custom-styles', get_stylesheet_directory_uri() . '/style.min.css?123');
 }
 
