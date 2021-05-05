@@ -2,12 +2,12 @@
 
 function jack_webster_enqueue_parent_styles()
 {
-    wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css?123123');
+    wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css?1231231');
 }
 
 function jack_webster_enqueue_scripts()
 {
-    wp_enqueue_style('custom-styles', get_stylesheet_directory_uri() . '/style.min.css?123');
+    wp_enqueue_style('custom-styles', get_stylesheet_directory_uri() . '/style.min.css?1231');
 }
 
 add_action('wp_enqueue_scripts', 'jack_webster_enqueue_parent_styles');
@@ -385,13 +385,13 @@ function wpf_dev_modern_file_upload_timeout() {
                                 return;
                         }
                         wpforms.dropzones.forEach(function( dropzone ) {
-                                dropzone.options.timeout = 60000; // The timeout for the XHR requests in milliseconds. Default is 300000.
+                                dropzone.options.timeout = 600000; // The timeout for the XHR requests in milliseconds. Default is 300000.
                         });
                 } );
         </script>
         <?php
 }
-add_action( 'wpforms_wp_footer', 'wpf_dev_modern_file_upload_timeout' );
+//add_action( 'wpforms_wp_footer', 'wpf_dev_modern_file_upload_timeout' );
 
 
 function jw_call_forms() {
@@ -399,8 +399,8 @@ function jw_call_forms() {
         // Test Form
         2519,2520,2545,
         // Call to Submission Forms
-        2476,2477,2478,2479,2480,2481,2482,2483,2484,2484,2485,2486,2487,2488,2489,2490
-    );
+	2591    
+);
 
     return $call_to_submission_forms;
 }
@@ -469,7 +469,7 @@ function wpf_dev_date_picker_range() {
     </script>
     <?php
 }
-add_action( 'wpforms_wp_footer', 'wpf_dev_date_picker_range' );
+//add_action( 'wpforms_wp_footer', 'wpf_dev_date_picker_range' );
 
 /**
  * WPForms Add new address field scheme (Canada)
@@ -544,6 +544,43 @@ $message = sprintf('<h5>Thank you for your submission for the Webster Awards.</h
 return $message;
 }
 add_filter( 'wpforms_frontend_confirmation_message', 'wpf_dev_frontend_confirmation_message', 10, 4 );
+
+
+/**
+ * Injection into WP Forms after form has loaded only 
+ *
+ * @link https://wpforms.com/developers/how-to-change-the-captcha-theme-on-google-checkbox-v2-recaptcha/
+ *
+ */
+  
+function wpf_footer_inject() {
+// Get Page ID
+$page_id = get_queried_object_id();
+?>
+<script type="text/javascript">
+    jQuery(function($){
+
+	// Refer to Google Sheet for order of categories, mapped to pages
+	var webster_pages = [
+	"page-id-2653","page-id-2658","page-id-2657","page-id-2666","page-id-2668","page-id-2670","page-id-2672","page-id-2493","page-id-2659","page-id-2674","page-id-2676","page-id-2678","page-id-2680","page-id-2682","page-id-2684","page-id-2686"];
+
+	// JS variable of page ID
+	var page_id = "<?php echo 'page-id-' . $page_id; ?>";
+	
+	// Get page ID position in our array
+	var pos = webster_pages.indexOf(page_id);
+	
+	//console.log(page_id);
+	//console.log(pos);
+
+	// Set WP Forms drop-down selected index to our position
+        $('.dropdown_webster_category select').get(0).selectedIndex = pos + 1;
+	});
+    </script>
+<?php
+}
+add_action( 'wpforms_wp_footer_end', 'wpf_footer_inject', 30 );
+
 
 /**
  * WPForms, update total field
