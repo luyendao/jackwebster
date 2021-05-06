@@ -357,12 +357,16 @@ div.wpforms-container.theme-light#wpforms-993 .wpforms-field-stripe-credit-card 
     color: #444 !important;
 }
 
+div.wpforms-container div.wpforms-uploader .dz-preview .dz-progress .dz-upload {
+    
+}
+
 .confirmation_button {
     padding: 20px 15px 15px 15px;
     background-color: #7BB5C0;
     color: #fff;
     font-weight: bold;
-    margin-top: 35px;
+    margin: 0 0 15px 0;
     display: block;
     width: 250px;
     text-align: center;
