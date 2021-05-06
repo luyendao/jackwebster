@@ -2,12 +2,12 @@
 
 function jack_webster_enqueue_parent_styles()
 {
-    wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css?123123');
+    wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css?1231231');
 }
 
 function jack_webster_enqueue_scripts()
 {
-    wp_enqueue_style('custom-styles', get_stylesheet_directory_uri() . '/style.min.css?123');
+    wp_enqueue_style('custom-styles', get_stylesheet_directory_uri() . '/style.min.css?1231');
 }
 
 add_action('wp_enqueue_scripts', 'jack_webster_enqueue_parent_styles');
@@ -385,22 +385,19 @@ function wpf_dev_modern_file_upload_timeout() {
                                 return;
                         }
                         wpforms.dropzones.forEach(function( dropzone ) {
-                                dropzone.options.timeout = 60000; // The timeout for the XHR requests in milliseconds. Default is 300000.
+                                dropzone.options.timeout = 600000; // The timeout for the XHR requests in milliseconds. Default is 300000.
                         });
                 } );
         </script>
         <?php
 }
-add_action( 'wpforms_wp_footer', 'wpf_dev_modern_file_upload_timeout' );
+//add_action( 'wpforms_wp_footer', 'wpf_dev_modern_file_upload_timeout' );
 
 
 function jw_call_forms() {
     $call_to_submission_forms= array (
-        // Test Form
-        2519,2520,2545,
-        // Call to Submission Forms
-        2476,2477,2478,2479,2480,2481,2482,2483,2484,2484,2485,2486,2487,2488,2489,2490
-    );
+	2591    
+);
 
     return $call_to_submission_forms;
 }
@@ -469,7 +466,7 @@ function wpf_dev_date_picker_range() {
     </script>
     <?php
 }
-add_action( 'wpforms_wp_footer', 'wpf_dev_date_picker_range' );
+//add_action( 'wpforms_wp_footer', 'wpf_dev_date_picker_range' );
 
 /**
  * WPForms Add new address field scheme (Canada)
@@ -519,35 +516,71 @@ $call_to_submission_forms = jw_call_forms();
 if ( !in_array($form_data['id'], $call_to_submission_forms )) {
 	return $message;
 }
-   
+
+$cat_name = $fields['59']['value'];
 $fname = $fields['29']['value'];
 $lname = $fields['30']['value'];
 $phone = $fields['33']['value'];
 $email = $fields['32']['value'];
-$page_url = $fields['58']['value'];
+$page_url = $fields['45']['value'];
 $address = $fields['34']['value'];
 
-//$address_arr = explode($address);
+$address1 = $fields['34']['address1'];
+$city = $fields['34']['city'];
+$postal = $fields['34']['postal'];
 
-var_dump($address);
+$link = sprintf('<a class="confirmation_button" href="%s?first_name=%s&last_name=%s&email=%s&phone=%s&address1=%s&city=%s&postal_code%s">Submit Another Entry</a>',$page_url,$fname,$lname,$email,$phone,$address_arr, $city, $postal);
 
-$address1 = $address_arr[0];
-$city = $address_arr[1];
-$postal = $address_arr[3];
-
-$link = sprintf('<a href="%s?first_name=%s&last_name=%s&email=%s&phone=%s&address1=%s&city=%s&postal_code%s">Submit Another Entry</a>',$page_url,$fname,$lname,$email,$phone,$address_arr, $city, $postal);
-
-$body = sprintf('<p><strong>Submitting another entry in the same category?</strong></p>If you are submitting more than one entry to this Webster category, use the link below to have your contact information auto-filled.<p>%s</p>',$link); 
+$body = sprintf('<p><strong>Submitting another entry?</strong></p><p>If you are submitting more than one entry, use the link below to have your contact information auto-filled.</p>%s<p>Please note that this submission is final, and no additional changes can be made to your entry.  You should receive a receipt for your submission fee shortly.  If you do not and require this, and if you have other questions, please contact the Foundation at <a href="mailto:info@jackwebster.com">info@jackwebster.com</a>. <br /> Finalists will be announced in September and the online Webster Awards will be held Nov. 3rd, 7:00 p.m.  PDT.</p>',$link); 
      
-$message = sprintf('<h5>Thank you for your submission for the Webster Awards.</h5><p>%s</p>', $body);
+$message = sprintf('<h6>Thank you for your submission.<br />%s!</h6><p>%s</p>', $cat_name, $body);
 
 return $message;
 }
 add_filter( 'wpforms_frontend_confirmation_message', 'wpf_dev_frontend_confirmation_message', 10, 4 );
 
+
+/**
+ * Injection into WP Forms after form has loaded only 
+ *
+ * @link https://wpforms.com/developers/how-to-change-the-captcha-theme-on-google-checkbox-v2-recaptcha/
+ *
+ */
+  
+function wpf_js_inject() {
+// Get Page ID
+$page_id = get_queried_object_id();
+?>
+<script type="text/javascript">
+    jQuery(function($){
+
+	// Refer to Google Sheet for order of categories, mapped to pages
+	var webster_pages = [
+	"page-id-2653","page-id-2658","page-id-2657","page-id-2668","page-id-2666","page-id-2672","page-id-2493","page-id-2659","page-id-2670","page-id-2674","page-id-2676","page-id-2678","page-id-2680","page-id-2682","page-id-2684","page-id-2686"];
+
+	// JS variable of page ID
+	var page_id = "<?php echo 'page-id-' . $page_id; ?>";
+	
+	// Get page ID position in our array
+	var pos = webster_pages.indexOf(page_id);
+	
+	//console.log(page_id);
+	//console.log(pos);
+
+	// Set WP Forms drop-down selected index to our position
+	$('.dropdown_webster_category select').get(0).selectedIndex = pos + 1;
+	});
+    </script>
+<?php
+}
+
+// We execute before the front end is output to ensure conditional logic isn't interrupted 
+add_action( 'wpforms_frontend_output', 'wpf_js_inject', 30 );
+
+
 /**
  * WPForms, update total field
- * @link https://www.billerickson.net/dynamically-update-fields-in-wpforms/
+ * @link https://www.billerickson.net/update-form-field-values-in-wpforms/
  *
  * @param array $fields Sanitized entry field values/properties.
  * @param array $entry Original $_POST global.
@@ -556,21 +589,18 @@ add_filter( 'wpforms_frontend_confirmation_message', 'wpf_dev_frontend_confirmat
  */
 function be_wpforms_update_total_field( $fields, $entry, $form_data ) {
 
-	$call_to_submission_forms = jw_call_forms();
-
-	// Only run on my form with ID = 7785
-	if( in_array( $form_data['id'], $call_to_submission_forms )) {
+		if( 2519 != $form_data['id'] )
 		return $fields;
-	}
 
-	$fields[58]['value'] = sprintf('<a href="%s?first_name=%s">Submit Another Entry</a>',$fields[58]['value'], $fields[29]['value']); 
+
+$fields[13]['value'] =  sprintf('<a href="%s">Digital File Link</a>',$fields[11]['value'][0]);
 
 	// Add red shirts (field ID 3) and blue shirts (field ID 4) into total (field ID 5)
 	//$fields[5]['value'] = intval( $fields[3]['value'] ) + intval( $fields[4]['value'] );
 
 	return $fields;
 }
-//add_filter( 'wpforms_process_filter', 'be_wpforms_update_total_field', 10, 3 );
+add_filter( 'wpforms_process_filter', 'be_wpforms_update_total_field', 10, 3 );
 
 
 ?>
