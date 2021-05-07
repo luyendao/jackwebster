@@ -7,7 +7,7 @@ function jack_webster_enqueue_parent_styles()
 
 function jack_webster_enqueue_scripts()
 {
-    wp_enqueue_style('custom-styles', get_stylesheet_directory_uri() . '/style.min.css?1231');
+    wp_enqueue_style('custom-styles', get_stylesheet_directory_uri() . '/style.min.css?1231123');
 }
 
 add_action('wp_enqueue_scripts', 'jack_webster_enqueue_parent_styles');
@@ -568,7 +568,7 @@ $page_id = get_queried_object_id();
 	//console.log(pos);
 
 	// Set WP Forms drop-down selected index to our position
-	$('.dropdown_webster_category select').get(0).selectedIndex = pos + 1;
+	$('.dropdown_webster_category select').get(0).selectedIndex = pos;
 	});
     </script>
 <?php
